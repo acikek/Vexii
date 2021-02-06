@@ -1,13 +1,13 @@
 const db = require("../db.js");
 const fetch = require("../util/fetch.js");
 const config = require("../config.json");
-const fs = require("fs");
 
 module.exports = {
   name: "init",
   description: "Re-initializes the entry process",
   usage: "init",
   async execute(m, client) {
+    if (m.author.id != config.author) return;
     let lobby = await fetch.channel(client, config.entry.lobby);
 
     db.users.keys().value().forEach(u => {
