@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const VexiiEmbed = require("../util/embed.js");
 const config = require("../config.json");
 
 module.exports = {
@@ -18,14 +18,12 @@ module.exports = {
       color = 16711680;
     }
 
-    let embed = new Discord.MessageEmbed()
+    let embed = new VexiiEmbed(m)
       .setColor(color)
       .addFields(
         { name: "Input 📥", value: `\`\`\`js\n${m.input}\n\`\`\`` },
         { name: "Output 📤", value: `\`\`\`js\n${result}\n\`\`\`` }
       )
-      .setTimestamp()
-      .setFooter(`Requested by ${m.author.tag}`, m.author.avatarURL());
 
     m.channel.send(embed);
   }

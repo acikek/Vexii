@@ -19,5 +19,6 @@ for (const file of files) {
 
 module.exports = {
   users: makeDatabase(`${__dirname}/data/users.json`),
-  messages: makeDatabase(`${__dirname}/data/messages.json`)
+  messages: makeDatabase(`${__dirname}/data/messages.json`),
+  pflags: makeDatabase(`${__dirname}/data/pflags.json`)
 }
