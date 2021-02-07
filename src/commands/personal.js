@@ -8,7 +8,9 @@ module.exports = {
   execute(m, client) {
     if (m.args[1] == "add") {
       if (!m.attachments.first()) return m.channel.send("**Command Error** | You need to provide an image.");
-      db.pflags.set(`${m.author.id}`, m.attachments.first().proxyURL).write();
+      let url = m.attachments.first().proxyURL;
+      if (!url.endsWith("png") && !url.endsWith("jpg")) return m.channel.send("**Command Error** | Invalid image format. Please only upload `.png` or `.jpg` files.");
+      db.pflags.set(`${m.author.id}`, url).write();
       m.channel.send("Successfully added personal flag.");
     } else if (m.args[1] == "flag") {
       if (!m.mentions.users.first()) return m.channel.send("**Command Error** | No username mention provided.");

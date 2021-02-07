@@ -1,3 +1,4 @@
 node_modules
 src/config.json
 src/data/**
+src/util/blazon.png

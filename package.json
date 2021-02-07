@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.1",
+    "drawshield": "^3.0.0",
+    "g-i-s": "^2.1.6",
     "get-json": "^1.0.1",
     "lowdb": "^1.0.0"
   }
