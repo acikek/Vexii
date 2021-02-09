@@ -1,10 +1,11 @@
 const VexiiEmbed = require("../util/embed.js");
 const db = require("../db.js");
+const config = require("../config.json");
 
 module.exports = {
   name: "personal",
-  description: "Uploads your personal flag to the database",
-  usage: "personal (flag|add|remove) (<username mention>) (<image upload>)",
+  description: "Personal flag utility terminal",
+  usage: "personal (flag|add|remove) (<username mention>|<image upload>)",
   execute(m, client) {
     if (m.args[1] == "add") {
       if (!m.attachments.first()) return m.channel.send("**Command Error** | You need to provide an image.");
@@ -13,17 +14,33 @@ module.exports = {
       db.pflags.set(`${m.author.id}`, url).write();
       m.channel.send("Successfully added personal flag.");
     } else if (m.args[1] == "flag") {
-      if (!m.mentions.users.first()) return m.channel.send("**Command Error** | No username mention provided.");
-      let user = m.mentions.users.first();
-      if (!db.pflags.get(`${user.id}`).value()) return m.channel.send("**Command Error** | This user doesn't have a personal flag uploaded.");
+      if (!m.mentions.users.first()) {
+        let embed = new VexiiEmbed(m, "Personal Flags")
+          .setDescription(`Use \`${config.prefix}personal flag @mention\` to view a user's personal flag.`)
+          .addFields([
+            { name: "Registered Users", value: Object.keys(db.pflags.value()).map(id => `<@!${id}>`).join(", ") }
+          ]);
 
-      let embed = new VexiiEmbed(m, `${user.username}'s Personal Flag`)
-        .setImage(db.pflags.get(`${user.id}`).value());
-
-      m.channel.send(embed);
+        m.channel.send(embed);
+      } else {
+        let user = m.mentions.users.first();
+        if (!db.pflags.get(`${user.id}`).value()) return m.channel.send("**Command Error** | This user doesn't have a personal flag uploaded.");
+  
+        let embed = new VexiiEmbed(m, `${user.username}'s Personal Flag`)
+          .setImage(db.pflags.get(`${user.id}`).value());
+  
+        m.channel.send(embed);
+      } 
     } else if (m.args[1] == "remove") {
       if (!db.pflags.get(`${m.author.id}`).value()) return m.channel.send("**Command Error** | No personal flag to remove.");
       db.pflags.unset(`${m.author.id}`).write(); m.channel.send("Successfully removed personal flag.");
+    } else {
+      if (!db.pflags.get(`${m.author.id}`).value()) return;
+
+      let embed = new VexiiEmbed(m, `${m.author.username}'s Personal Flag`)
+        .setImage(db.pflags.get(`${m.author.id}`).value());
+
+      m.channel.send(embed);
     }
   }
 }
