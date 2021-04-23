@@ -16,7 +16,7 @@ module.exports = {
     } else if (m.args[1] == "get") {
       if (!m.mentions.users.first() && (!m.args[2] || m.args[2] == " ")) {
         let embed = new VexiiEmbed(m, "Personal Flags")
-          .setDescription(`Use \`${config.prefix}personal flag @mention\` to view a user's personal flag.`)
+          .setDescription(`Use \`${config.prefix}personal flag @mention/id\` to view a user's personal flag.`)
           .addFields([
             { name: "Registered Users", value: Object.keys(db.pflags.value()).map(id => `<@!${id}>`).join(", ") }
           ]);
