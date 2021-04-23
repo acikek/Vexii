@@ -5,7 +5,7 @@ const config = require("../config.json");
 module.exports = {
   name: "personal",
   description: "Personal flag utility terminal",
-  usage: "personal (get|add|remove) (<username mention>|<image upload>)",
+  usage: "personal (get|add|remove) (<user mention or id>|<image upload>)",
   async execute(m, client) {
     if (m.args[1] == "add") {
       if (!m.attachments.first()) return m.channel.send("**Command Error** | You need to provide an image.");
