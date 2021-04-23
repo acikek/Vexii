@@ -8,7 +8,7 @@ module.exports = async function(client, r) {
   if (r.users.cache.last().id == client.user.id) return; // bot check
 
   if (r.message.channel.id != config.entry.modChannel) {
-    if (r._emoji.name == "👋") {
+    if (r._emoji.name == "👋" && r.users.cache.size <= 1) {
       let att = r.message.attachments.first();
       if (!att) att = r.message.embeds[0] ? r.message.embeds[0].image : null;
       if (!att) return;
