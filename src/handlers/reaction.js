@@ -8,8 +8,11 @@ module.exports = async function(client, r) {
   if (r.users.cache.last().id == client.user.id) return; // bot check
 
   if (r.message.channel.id != config.entry.modChannel) {
-    if (r._emoji.name == "👋" && r.message.attachments.first()) {
+    if (r._emoji.name == "👋") {
       let att = r.message.attachments.first();
+      if (!att) att = r.message.embeds[0] ? r.message.embeds[0].image : null;
+      if (!att) return;
+
       let embed = new Discord.MessageEmbed()
         .setColor("C93837")
         .setTitle("FlagWaver Link")
