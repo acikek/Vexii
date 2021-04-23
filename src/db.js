@@ -15,8 +15,6 @@ for (const file of files) {
   databases[file.split(".json")[0]] = makeDatabase(`${__dirname}/data/${file}`);
 }*/
 
-
-
 module.exports = {
   users: makeDatabase(`${__dirname}/data/users.json`),
   messages: makeDatabase(`${__dirname}/data/messages.json`),
